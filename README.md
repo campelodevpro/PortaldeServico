@@ -1,11 +1,22 @@
 
-
 ## CRUD com Comentários e Policy e autenticação Brezee
 
+Comandos para uso nas classes: 
 
-## Laravel Sponsors
+1. declare(strict_types=1);
+2.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Commandos da policy e use da authorize
+
+Use na controller: use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+sail art make:policy CommentPolicy --model=Comment
+
+
+
+
+
+
 
 ### Premium Partners
 

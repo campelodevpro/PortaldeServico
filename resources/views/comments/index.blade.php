@@ -49,6 +49,17 @@
                                     <x-dropdown-link :href="route('comments.edit', $comment)">
                                         {{ __('Alterar')}}
                                     </x-dropdown-link>
+
+                                    <form method="POST" action="{{ route('comments.destroy', $comments)}}">
+                                        @csrf
+                                        @method('delete')
+                                        <x-dropdown-link :href="route('comments.destroy', $comments)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                            {{ __('Excluir')}}
+                                        </x-dropdown-link>
+                                    </form>
+
+
+
                                 </x-slot>
                                 </x-dropdown>
                             </div>
