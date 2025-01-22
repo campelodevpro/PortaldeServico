@@ -6,9 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class CommentController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -34,12 +35,12 @@ class CommentController extends Controller
     {
         $validate = $request->validate([
             'message' => 'required|string|max:255'
-        ],
-    [
-        'message.required'=> 'O campo mensagem é obrigatório',
-        'message.string'=> 'O campo mensagem deve ser um texto válido',
-        'message.max'=> 'O campo mensagem deve ter somente 255 caracteres',
-    ]);
+            ],
+        [
+            'message.required'=> 'O campo mensagem é obrigatório',
+            'message.string'=> 'O campo mensagem deve ser um texto válido',
+            'message.max'=> 'O campo mensagem deve ter somente 255 caracteres',
+        ]);
 
         $request->user()->comments()->create($validate);
         return to_route('comments.index');
@@ -58,7 +59,9 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        $this->authorize('update', $comment);
+
+        return view ('comments.edit', compact('comment'));
     }
 
     /**
@@ -66,7 +69,21 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $this->authorize('update', $comment);
+
+        $validate = $request->validate([
+            'message' => 'required|string|max:255'
+            ],
+        [
+            'message.required'=> 'O campo mensagem é obrigatório',
+            'message.string'=> 'O campo mensagem deve ser um texto válido',
+            'message.max'=> 'O campo mensagem deve ter somente 255 caracteres',
+        ]);
+
+        $comment->update($validate);
+
+        return to_route('comments.index');
+
     }
 
     /**
