@@ -4,6 +4,7 @@ declare(strict_types= 1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentValidationRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -31,18 +32,11 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function CommentValidationRequest(Request $request)
     {
-        $validate = $request->validate([
-            'message' => 'required|string|max:255'
-            ],
-        [
-            'message.required'=> 'O campo mensagem é obrigatório',
-            'message.string'=> 'O campo mensagem deve ser um texto válido',
-            'message.max'=> 'O campo mensagem deve ter somente 255 caracteres',
-        ]);
 
-        $request->user()->comments()->create($validate);
+
+        $request->user()->comments()->create($request->validated());
         return to_route('comments.index');
     }
 
@@ -67,20 +61,11 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comment $comment)
+    public function update(CommentValidationRequest $request, Comment $comment)
     {
         $this->authorize('update', $comment);
 
-        $validate = $request->validate([
-            'message' => 'required|string|max:255'
-            ],
-        [
-            'message.required'=> 'O campo mensagem é obrigatório',
-            'message.string'=> 'O campo mensagem deve ser um texto válido',
-            'message.max'=> 'O campo mensagem deve ter somente 255 caracteres',
-        ]);
-
-        $comment->update($validate);
+        $comment->update($request->validated());
 
         return to_route('comments.index');
 

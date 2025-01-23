@@ -58,8 +58,19 @@ MAIL_FROM_NAME="${APP_NAME}"
         networks:
             - sail
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - laravel-network
 
-## Configurar o MailPit
+## Criando a class de ValidationRequest (Refatorar Validation)
+
+sail art make:request CommentValidationRequest
+
+
 
 ### Premium Partners
 
