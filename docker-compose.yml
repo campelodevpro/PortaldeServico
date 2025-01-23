@@ -47,21 +47,14 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
-
     mailpit:
         image: axllent/mailpit:latest
         container_name: mailpit
         ports:
-        - "8025:8025" # Interface web do Mailpit
-        - "1025:1025" # Porta SMTP para envio de e-mails
-        restart: unless-stopped
+        - "8025:8025"
+        - "1025:1025"
         networks:
             - sail
-        # environment:
-        # Configurações opcionais
-        # MAILPIT_SMTP_BIND_ADDR: "0.0.0.0:1025" # Porta para o SMTP
-        # MAILPIT_HTTP_BIND_ADDR: "0.0.0.0:8025" # Porta para a interface HTTP
-        # MAILPIT_MESSAGE_LIMIT: "1000"         # Limite de mensagens armazenadas
 
 networks:
     sail:

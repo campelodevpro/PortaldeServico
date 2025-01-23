@@ -40,24 +40,23 @@ sail art make:listener SendCommentCreateNotifications --event=CommentCreatedEven
 
 4.configurar o mailpint para teste:
 MAIL_MAILER=smtp
-MAIL_SCHEME=null
 MAIL_HOST=mailpit
 MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=example@mailpit.test
+MAIL_FROM_NAME="${APP_NAME}"
 
 --inserir no docker-compose.yml
-services:
-  mailpit:
-    image: axllent/mailpit:latest
-    container_name: mailpit
-    ports:
-      - "8025:8025" # Interface web do Mailpit
-      - "1025:1025" # Porta SMTP para envio de e-mails
-    restart: unless-stopped
-    environment:
-      # Configurações opcionais
-      MAILPIT_SMTP_BIND_ADDR: "0.0.0.0:1025" # Porta para o SMTP
-      MAILPIT_HTTP_BIND_ADDR: "0.0.0.0:8025" # Porta para a interface HTTP
-      MAILPIT_MESSAGE_LIMIT: "1000"         # Limite de mensagens armazenadas
+    mailpit:
+        image: axllent/mailpit:latest
+        container_name: mailpit
+        ports:
+        - "8025:8025"
+        - "1025:1025"
+        networks:
+            - sail
 
 
 ## Configurar o MailPit
